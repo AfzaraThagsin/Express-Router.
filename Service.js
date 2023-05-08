@@ -29,17 +29,14 @@ serviceRouter.get('/',(request,response)=>{
   })
 
 serviceRouter.get('/:id([0-9]{1})',(request,response)=>{
-    const pageId = Number(request.params.id)
-    
-    const userId=listofusers.find((user)=> user.id===pageId)
-       
-        if(!userId){
-            response.send('page not found')
-        }
-        else{
-            response.json(userId.name)
-        }
-   // response.send(`This is list of Users ${request.params.id}`)
+    response.send(request.user.name)
+ 
+})
+
+serviceRouter.param('id',(request,response,next,id)=>{
+        request.user = listofusers[id-1]
+        console.log(id);
+        next()
  
   })
 serviceRouter.get('/',(request,response)=>{
